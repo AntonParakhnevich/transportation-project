@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN"
+  "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+
+    <property name="hibernate.dialect">
+      com.transportation.config.CustomMySQLDialect
+    </property>
+
+    <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+
+    <property name="hibernate.connection.url">
+      jdbc:mysql://127.0.0.1:3306/test?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8
+    </property>
+    <property name="hibernate.connection.username">
+      root
+    </property>
+    <property name="hibernate.connection.password">
+      root
+    </property>
+    <property name="hibernate.connection.charSet">UTF-8</property>
+    <property name="hibernate.connection.characterEncoding">UTF-8</property>
+    <property name="hibernate.connection.useUnicode">true</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+
+    <mapping class="com.transportation.model.entity.UserAccount"/>
+    <mapping class="com.transportation.model.entity.Company"/>
+    <mapping class="com.transportation.model.entity.Car"/>
+    <mapping class="com.transportation.model.entity.Admin"/>
+    <mapping class="com.transportation.model.entity.Customer"/>
+
+  </session-factory>
+</hibernate-configuration>
