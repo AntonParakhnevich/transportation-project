@@ -49,7 +49,7 @@ public class SecurityConfig {
         )
         .logout(logout -> logout
             .logoutUrl("/logout")
-            .logoutSuccessUrl("/login")
+//            .logoutSuccessUrl("/login")
             .deleteCookies("JSESSIONID")
         );
     return http.build();

@@ -38,6 +38,12 @@ public class UserAccountService implements UserDetailsService {
   }
 
   public UserAccount create(CreateUserAccountModel model) {
+    String validateErrorMessage = userAccountValidationService.validate(model);
+
+    if (validateErrorMessage != null) {
+      throw new IllegalArgumentException(validateErrorMessage);
+    }
+
     Role role = roleRepository.findFirstByName(model.getRole());
 
     UserAccount userAccount = new UserAccount();
@@ -47,11 +53,6 @@ public class UserAccountService implements UserDetailsService {
     userAccount.setPassword(passwordEncoder.encode(model.getPassword()));
     userAccount.setEmail(model.getEmail());
     userAccount.setRoleId(role.getId());
-
-    String validateErrorMessage = userAccountValidationService.validate(userAccount);
-    if (validateErrorMessage != null) {
-      throw new IllegalArgumentException(validateErrorMessage);
-    }
 
     return userAccountRepository.save(userAccount);
   }
@@ -65,7 +66,13 @@ public class UserAccountService implements UserDetailsService {
   public UserAccountModel getByEmail(String email) {
     return Optional.ofNullable(userAccountRepository.findByEmail(email))
         .map(userAccountMapper::toModel)
-        .orElseThrow(() -> new IllegalArgumentException("User not found with email=" + email));
+        .orElse(null);
+  }
+
+  public UserAccountModel getByPhone(String phone) {
+    return Optional.ofNullable(userAccountRepository.findByPhone(phone))
+        .map(userAccountMapper::toModel)
+        .orElse(null);
   }
 
   public void deleteById(Long id) {

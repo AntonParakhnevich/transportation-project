@@ -4,15 +4,25 @@ import java.util.Objects;
 
 public class AdminResponse {
 
+  private Long id;
   private Long userId;
   private Long companyId;
 
-  public AdminResponse(Long userId, Long companyId) {
+  public AdminResponse(Long id, Long userId, Long companyId) {
+    this.id = id;
     this.userId = userId;
     this.companyId = companyId;
   }
 
   public AdminResponse() {
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public Long getUserId() {
@@ -40,18 +50,20 @@ public class AdminResponse {
       return false;
     }
     AdminResponse that = (AdminResponse) o;
-    return Objects.equals(userId, that.userId) && Objects.equals(companyId, that.companyId);
+    return Objects.equals(id, that.id) && Objects.equals(userId, that.userId)
+        && Objects.equals(companyId, that.companyId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, companyId);
+    return Objects.hash(id, userId, companyId);
   }
 
   @Override
   public String toString() {
     return "AdminResponse{" +
-        "userId=" + userId +
+        "id=" + id +
+        ", userId=" + userId +
         ", companyId=" + companyId +
         '}';
   }

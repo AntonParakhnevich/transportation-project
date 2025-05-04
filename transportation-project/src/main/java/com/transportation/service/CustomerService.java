@@ -27,13 +27,19 @@ public class CustomerService {
   }
 
   @Transactional
-  public void create(CreateCustomerRequest request) {
+  public String create(CreateCustomerRequest request) {
     CreateUserAccountModel createUserAccountModel = new CreateUserAccountModel(request.getName(), request.getPhone(),
         RoleName.USER, request.getPassword(), request.getEmail());
-    UserAccount userAccount = userAccountService.create(createUserAccountModel);
-    Customer customer = new Customer();
-    customer.setUserAccount(userAccount);
-    customerRepository.save(customer);
+    try {
+      UserAccount userAccount = userAccountService.create(createUserAccountModel);
+      Customer customer = new Customer();
+      customer.setUserAccount(userAccount);
+      customerRepository.save(customer);
+    } catch (Exception e) {
+      return e.getMessage();
+    }
+
+    return "ok";
   }
 
   public CustomerModel getByEmail(String email) {
@@ -41,11 +47,6 @@ public class CustomerService {
         .map(customerMapper::toModel)
         .orElseThrow(() -> new IllegalArgumentException("Customer with email=" + email + " not found"));
   }
-
-//  public Customer getById(Long id) {
-//    return customerRepository.findById(id)
-//        .orElseThrow(() -> new IllegalArgumentException("Customer with id=" + id + " not found"));
-//  }
 
   @Transactional
   public void delete(CustomerModel customer) {

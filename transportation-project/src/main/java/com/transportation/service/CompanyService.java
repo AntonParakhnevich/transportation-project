@@ -5,6 +5,7 @@ import com.transportation.model.CompanyModel;
 import com.transportation.model.entity.Company;
 import com.transportation.repository.CompanyRepository;
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,16 @@ public class CompanyService {
     return companyRepository.findById(id)
         .map(companyMapper::toModel)
         .orElseThrow(() -> new IllegalArgumentException("Company with id=" + id + " not found"));
+  }
+
+  public String deleteById(Long id) {
+    return Optional.of(companyRepository.existsById(id))
+        .filter(isExistById -> isExistById)
+        .map(isExistById -> {
+          companyRepository.deleteById(id);
+          return "success";
+        })
+        .orElse(String.format("company not found, id=%s", id));
   }
 
   public List<CompanyModel> getAll() {

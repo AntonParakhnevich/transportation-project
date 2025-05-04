@@ -29,6 +29,8 @@
     <mapping class="com.transportation.model.entity.Car"/>
     <mapping class="com.transportation.model.entity.Admin"/>
     <mapping class="com.transportation.model.entity.Customer"/>
+    <mapping class="com.transportation.model.entity.Route"/>
+    <mapping class="com.transportation.model.entity.Trip"/>
 
   </session-factory>
 </hibernate-configuration>

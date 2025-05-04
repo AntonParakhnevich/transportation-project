@@ -20,14 +20,20 @@ public class AdminService {
     this.adminRepository = adminRepository;
   }
 
-  public void create(CreateAdminRequest request) {
+  public String create(CreateAdminRequest request) {
     CreateUserAccountModel createUserAccountModel = new CreateUserAccountModel(request.getName(), request.getPhone(),
         request.getRole(), request.getPassword(), request.getEmail());
-    UserAccount userAccount = userAccountService.create(createUserAccountModel);
-    Admin admin = new Admin();
-    admin.setUserAccount(userAccount);
-    admin.setCompanyId(request.getCompanyId());
-    adminRepository.save(admin);
+    try {
+      UserAccount userAccount = userAccountService.create(createUserAccountModel);
+      Admin admin = new Admin();
+      admin.setUserAccount(userAccount);
+      admin.setCompanyId(request.getCompanyId());
+      adminRepository.save(admin);
+    } catch (Exception e) {
+      return e.getMessage();
+    }
+
+    return "ok";
   }
 
   public AdminModel findByEmail(String email) {

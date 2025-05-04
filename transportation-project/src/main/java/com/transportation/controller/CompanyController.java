@@ -4,6 +4,7 @@ import com.transportation.model.CompanyModel;
 import com.transportation.model.request.CreateCompanyRequest;
 import com.transportation.service.CompanyService;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,12 +25,16 @@ public class CompanyController {
 
   @PostMapping("/")
   public String create(@RequestBody CreateCompanyRequest request) {
-    companyService.create(request.getName(), request.getAddress(), request.getPhone());
-    return "admin";
+    return companyService.create(request.getName(), request.getAddress(), request.getPhone());
   }
 
   @GetMapping("/{id}")
   public CompanyModel getById(@PathVariable Long id) {
     return companyService.getById(id);
+  }
+
+  @DeleteMapping("/{id}")
+  public String deleteById(@PathVariable Long id) {
+    return companyService.deleteById(id);
   }
 }

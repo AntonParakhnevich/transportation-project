@@ -22,14 +22,13 @@ public class AdminController {
 
   @PostMapping("/")
   public String create(@RequestParam CreateAdminRequest request) {
-    adminService.create(request);
-    return "ok";
+    return adminService.create(request);
   }
 
-  @GetMapping()
+  @GetMapping
   public AdminResponse getByEmail(@RequestParam("email") String email) {
     return Optional.ofNullable(adminService.findByEmail(email))
-        .map(admin -> new AdminResponse(admin.getUserAccountId(), admin.getCompanyId()))
+        .map(admin -> new AdminResponse(admin.getId(), admin.getUserAccountId(), admin.getCompanyId()))
         .orElseGet(AdminResponse::new);
   }
 }

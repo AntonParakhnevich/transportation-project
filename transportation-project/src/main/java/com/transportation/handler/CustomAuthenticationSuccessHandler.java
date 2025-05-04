@@ -18,10 +18,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
       Authentication authentication) throws IOException {
     Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-    if (roles.contains(RoleName.ADMIN.getAuthority()) || roles.contains(RoleName.SUPER_ADMIN.getAuthority())) {
-      response.sendRedirect("/admin");
-    } else {
-      response.sendRedirect("/private-area");
-    }
+//    if (roles.contains(RoleName.ADMIN.getAuthority()) || roles.contains(RoleName.SUPER_ADMIN.getAuthority())) {
+//      response.sendRedirect("/admins?email=" + authentication.getName());
+//    } else {
+//      response.sendRedirect("/private-area");
+//    }
   }
 }
